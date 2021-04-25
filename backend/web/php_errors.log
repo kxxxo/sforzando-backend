@@ -1,0 +1,2 @@
+[25-Apr-2021 03:41:16 UTC] PHP Fatal error:  Cannot redeclare backend\controllers\SiteController::behaviors() in C:\sites\fuse-backend\backend\controllers\SiteController.php on line 61
+[25-Apr-2021 03:41:44 UTC] PHP Fatal error:  Cannot redeclare backend\controllers\SiteController::behaviors() in C:\sites\fuse-backend\backend\controllers\SiteController.php on line 61
