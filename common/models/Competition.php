@@ -15,9 +15,9 @@ use Yii;
  * @property string $img_url
  * @property bool $is_ended
  *
- * @property CompilationLanguage[] $compilationLanguages
+ * @property CompetitionLanguage[] $compilationLanguages
  */
-class Compilation extends \yii\db\ActiveRecord
+class Competition extends \yii\db\ActiveRecord
 {
 
     /**
@@ -25,7 +25,7 @@ class Compilation extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'compilation';
+        return 'competition';
     }
 
     /**
@@ -57,12 +57,12 @@ class Compilation extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[CompilationLanguages]].
+     * Gets query for [[CompetitionLanguages]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCompilationLanguages()
+    public function getCompetitionLanguages()
     {
-        return $this->hasMany(CompilationLanguage::className(), ['compilation_id' => 'id']);
+        return $this->hasMany(CompetitionLanguage::className(), ['competition' => 'id']);
     }
 }

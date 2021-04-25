@@ -14,17 +14,17 @@ use Yii;
  * @property string $text
  * @property int $compilation_id
  *
- * @property Compilation $compilation
+ * @property Competition $competition
  * @property Language $language
  */
-class CompilationLanguage extends \yii\db\ActiveRecord
+class CompetitionLanguage extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'compilation_language';
+        return 'competition_language';
     }
 
     /**
@@ -33,11 +33,11 @@ class CompilationLanguage extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['language_id', 'title', 'text', 'compilation_id'], 'required'],
-            [['language_id', 'compilation_id'], 'default', 'value' => null],
-            [['language_id', 'compilation_id'], 'integer'],
+            [['language_id', 'title', 'text', 'competition_id'], 'required'],
+            [['language_id', 'competition_id'], 'default', 'value' => null],
+            [['language_id', 'competition_id'], 'integer'],
             [['title', 'text'], 'string'],
-            [['compilation_id'], 'exist', 'skipOnError' => true, 'targetClass' => Compilation::className(), 'targetAttribute' => ['compilation_id' => 'id']],
+            [['competition_id'], 'exist', 'skipOnError' => true, 'targetClass' => Competition::className(), 'targetAttribute' => ['competition_id' => 'id']],
             [['language_id'], 'exist', 'skipOnError' => true, 'targetClass' => Language::className(), 'targetAttribute' => ['language_id' => 'id']],
         ];
     }
@@ -52,18 +52,18 @@ class CompilationLanguage extends \yii\db\ActiveRecord
             'language_id' => 'Language ID',
             'title' => 'Title',
             'text' => 'Text',
-            'compilation_id' => 'Compilation ID',
+            'competition_id' => 'competition id',
         ];
     }
 
     /**
-     * Gets query for [[Compilation]].
+     * Gets query for [[competition]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCompilation()
+    public function getCompetition()
     {
-        return $this->hasOne(Compilation::className(), ['id' => 'compilation_id']);
+        return $this->hasOne(Competition::className(), ['id' => 'competition_id']);
     }
 
     /**

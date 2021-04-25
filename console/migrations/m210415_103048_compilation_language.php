@@ -3,7 +3,7 @@
 use yii\db\Migration;
 
 /**
- * Class m210415_103048_compilation_language
+ * Class m210415_103048_competition_language
  */
 class m210415_103048_compilation_language extends Migration
 {
@@ -12,11 +12,11 @@ class m210415_103048_compilation_language extends Migration
      */
     public function safeUp()
     {
-        $this->dropColumn('compilation','title');
-        $this->dropColumn('compilation','text');
+        $this->dropColumn('competition','title');
+        $this->dropColumn('competition','text');
 
 
-        $this->createTable('compilation_language',[
+        $this->createTable('competition_language',[
             'id'=>$this->primaryKey(),
             'language_id'=>$this->integer()->notNull(),
             'title'=>$this->text()->notNull(),
@@ -39,7 +39,7 @@ class m210415_103048_compilation_language extends Migration
             ['Arabic','ar'],
         ]);
 
-        $this->addForeignKey('FK_compilation_language_language_id','compilation_language','language_id','language','id');
+        $this->addForeignKey('FK_competition_language_language_id','competition_language','language_id','language','id');
 
     }
 
@@ -48,7 +48,7 @@ class m210415_103048_compilation_language extends Migration
      */
     public function safeDown()
     {
-        echo "m210415_103048_compilation_language cannot be reverted.\n";
+        echo "m210415_103048_competition_language cannot be reverted.\n";
 
         return false;
     }
@@ -62,7 +62,7 @@ class m210415_103048_compilation_language extends Migration
 
     public function down()
     {
-        echo "m210415_103048_compilation_language cannot be reverted.\n";
+        echo "m210415_103048_competition_language cannot be reverted.\n";
 
         return false;
     }

@@ -12,8 +12,8 @@ class m210415_110739_compet_lang_add_id extends Migration
      */
     public function safeUp()
     {
-        $this->addColumn('compilation_language','compilation_id',$this->integer()->notNull());
-        $this->addForeignKey('FK_compilation_language_compilation_id','compilation_language','compilation_id','compilation','id');
+        $this->addColumn('competition_language','competition_id',$this->integer()->notNull());
+        $this->addForeignKey('FK_competition_language_competition_id','competition_language','competition_id','competition','id');
 
     }
 

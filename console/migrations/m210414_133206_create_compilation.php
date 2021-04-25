@@ -12,7 +12,7 @@ class m210414_133206_create_compilation extends Migration
      */
     public function safeUp()
     {
-        $this->createTable('compilation',[
+        $this->createTable('competition',[
             'id'=>$this->primaryKey(),
             'title'=>$this->text()->notNull(),
             'text'=>$this->text(),
@@ -29,7 +29,7 @@ class m210414_133206_create_compilation extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('compilation');
+        $this->dropTable('competition');
         return true;
     }
 

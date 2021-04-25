@@ -1,7 +1,7 @@
 <?php
 namespace backend\controllers;
 
-use common\models\Compilation;
+use common\models\Competition;
 use common\models\Instance;
 use common\models\Language;
 use frontend\models\ResendVerificationEmailForm;
@@ -55,10 +55,10 @@ class SiteController extends Controller
 
 
 
-    public function actionGetCompilations($page = 1, $count = 3)
+    public function actionGetCompetitions($page = 1, $count = 3)
     {
-        return Compilation::find()
-            ->with(['compilationLanguages'])
+        return Competition::find()
+            ->with(['competitionLanguages'])
             ->orderBy(['start_datetime'=>SORT_DESC])
             ->limit($count)
             ->offset(($page-1)*$count)

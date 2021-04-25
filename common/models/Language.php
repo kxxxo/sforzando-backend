@@ -13,7 +13,7 @@ use Yii;
  * @property bool $enable
  * @property string $i18_name
  *
- * @property CompilationLanguage[] $compilationLanguages
+ * @property CompetitionLanguage[] $compilationLanguages
  * @property JuryLanguage[] $juryLanguages
  */
 class Language extends \yii\db\ActiveRecord
@@ -56,9 +56,9 @@ class Language extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCompilationLanguages()
+    public function getCompetitionLanguages()
     {
-        return $this->hasMany(CompilationLanguage::className(), ['language_id' => 'id']);
+        return $this->hasMany(CompetitionLanguage::className(), ['language_id' => 'id']);
     }
 
     /**
