@@ -3,6 +3,7 @@ namespace backend\controllers;
 
 use common\models\Competition;
 use common\models\Instance;
+use common\models\Judge;
 use common\models\Language;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
@@ -55,15 +56,34 @@ class SiteController extends Controller
 
 
 
-    public function actionGetCompetitions($page = 1, $count = 3)
+    public function actionGetCompetitions($page = 1, $count = 3,$result = null)
     {
-        return Competition::find()
+        $data = Competition::find()
             ->with(['competitionLanguages'])
-            ->orderBy(['start_datetime'=>SORT_DESC])
+            ->orderBy(['start_date'=>SORT_DESC])
             ->limit($count)
             ->offset(($page-1)*$count)
-            ->asArray()
+            ;
+        if(!is_null($result)){
+            $data->andWhere([
+                'AND',
+                ['competition.is_ended'=>$result],
+                ['IS NOT','competition.result_url',null]
+            ]);
+        }
+
+        return $data->asArray()
             ->all();
     }
 
+    /**
+     * @return array|\yii\db\ActiveRecord[]
+     */
+    public function actionGetJudges(){
+        return Judge::find()
+            ->with(['judgeLanguages'])
+            ->orderBy(['id'=>SORT_ASC])
+            ->asArray()
+            ->all();
+    }
 }

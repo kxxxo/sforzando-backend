@@ -11,9 +11,10 @@ use Yii;
  * @property int $id
  * @property string|null $create_datetime
  * @property string $request_end_datetime
- * @property string $start_datetime
+ * @property string $start_date
  * @property string $img_url
  * @property bool $is_ended
+ * @property string $result_url
  *
  * @property CompetitionLanguage[] $compilationLanguages
  */
@@ -34,9 +35,9 @@ class Competition extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['create_datetime', 'request_end_datetime', 'start_datetime'], 'safe'],
-            [['request_end_datetime', 'start_datetime', 'img_url'], 'required'],
-            [['img_url'], 'string'],
+            [['create_datetime', 'request_end_datetime', 'start_date'], 'safe'],
+            [['request_end_datetime', 'start_date', 'img_url'], 'required'],
+            [['img_url','result_url'], 'string'],
             [['is_ended'], 'boolean'],
         ];
     }
@@ -50,7 +51,7 @@ class Competition extends \yii\db\ActiveRecord
             'id' => 'ID',
             'create_datetime' => 'Create Datetime',
             'request_end_datetime' => 'Request End Datetime',
-            'start_datetime' => 'Start Datetime',
+            'start_date' => 'Start Datetime',
             'img_url' => 'Img Url',
             'is_ended' => 'Is Ended',
         ];
@@ -63,6 +64,6 @@ class Competition extends \yii\db\ActiveRecord
      */
     public function getCompetitionLanguages()
     {
-        return $this->hasMany(CompetitionLanguage::className(), ['competition' => 'id']);
+        return $this->hasMany(CompetitionLanguage::className(), ['competition_id' => 'id']);
     }
 }

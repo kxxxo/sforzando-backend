@@ -14,7 +14,7 @@ use Yii;
  * @property string $i18_name
  *
  * @property CompetitionLanguage[] $compilationLanguages
- * @property JuryLanguage[] $juryLanguages
+ * @property JudgeLanguage[] $judgeLanguages
  */
 class Language extends \yii\db\ActiveRecord
 {
@@ -62,12 +62,12 @@ class Language extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[JuryLanguages]].
+     * Gets query for [[judgeLanguages]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getJuryLanguages()
+    public function getJudgeLanguages()
     {
-        return $this->hasMany(JuryLanguage::className(), ['language_id' => 'id']);
+        return $this->hasMany(JudgeLanguage::className(), ['language_id' => 'id']);
     }
 }

@@ -6,25 +6,25 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "jury_language".
+ * This is the model class for table "judge_language".
  *
  * @property int $id
  * @property int $language_id
- * @property int $jury_id
+ * @property int $judge_id
  * @property string $fio
  * @property string $description
  *
- * @property Jury $jury
+ * @property Judge $judge
  * @property Language $language
  */
-class JuryLanguage extends \yii\db\ActiveRecord
+class JudgeLanguage extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'jury_language';
+        return 'judge_language';
     }
 
     /**
@@ -33,12 +33,12 @@ class JuryLanguage extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['language_id', 'jury_id', 'fio', 'description'], 'required'],
-            [['language_id', 'jury_id'], 'default', 'value' => null],
-            [['language_id', 'jury_id'], 'integer'],
+            [['language_id', 'judge_id', 'fio', 'description'], 'required'],
+            [['language_id', 'judge_id'], 'default', 'value' => null],
+            [['language_id', 'judge_id'], 'integer'],
             [['description'], 'string'],
             [['fio'], 'string', 'max' => 255],
-            [['jury_id'], 'exist', 'skipOnError' => true, 'targetClass' => Jury::className(), 'targetAttribute' => ['jury_id' => 'id']],
+            [['judge_id'], 'exist', 'skipOnError' => true, 'targetClass' => Judge::className(), 'targetAttribute' => ['judge_id' => 'id']],
             [['language_id'], 'exist', 'skipOnError' => true, 'targetClass' => Language::className(), 'targetAttribute' => ['language_id' => 'id']],
         ];
     }
@@ -51,20 +51,20 @@ class JuryLanguage extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'language_id' => 'Language ID',
-            'jury_id' => 'Jury ID',
+            'judge_id' => 'judge ID',
             'fio' => 'Fio',
             'description' => 'Description',
         ];
     }
 
     /**
-     * Gets query for [[Jury]].
+     * Gets query for [[judge]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getJury()
+    public function getJudge()
     {
-        return $this->hasOne(Jury::className(), ['id' => 'jury_id']);
+        return $this->hasOne(Judge::className(), ['id' => 'judge_id']);
     }
 
     /**

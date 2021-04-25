@@ -6,21 +6,21 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "jury".
+ * This is the model class for table "judge".
  *
  * @property int $id
  * @property string $img_url
  *
- * @property JuryLanguage[] $juryLanguages
+ * @property JudgeLanguage[] $judgeLanguages
  */
-class Jury extends \yii\db\ActiveRecord
+class Judge extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'jury';
+        return 'judge';
     }
 
     /**
@@ -46,12 +46,12 @@ class Jury extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[JuryLanguages]].
+     * Gets query for [[JudgeLanguages]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getJuryLanguages()
+    public function getJudgeLanguages()
     {
-        return $this->hasMany(JuryLanguage::className(), ['jury_id' => 'id']);
+        return $this->hasMany(JudgeLanguage::className(), ['judge_id' => 'id']);
     }
 }
