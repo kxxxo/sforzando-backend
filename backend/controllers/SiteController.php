@@ -37,8 +37,8 @@ class SiteController extends Controller
                     // restrict access to domains:
                     'Origin' => [
                         'http://localhost:3000',
-                        'http://sforzando-frontend.kxxo.ru/',
-                        'https://sforzando-frontend.kxxo.ru/',
+                        'http://sforzando-frontend.kxxo.ru',
+                        'https://sforzando-frontend.kxxo.ru',
                     ],
                     'Access-Control-Allow-Headers' => ['*'],
                     'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
