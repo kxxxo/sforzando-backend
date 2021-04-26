@@ -39,6 +39,7 @@ class SiteController extends Controller
                         'http://localhost:3000',
                         'http://sforzando-frontend.kxxo.ru',
                         'https://sforzando-frontend.kxxo.ru',
+                        'http://sforzando-frontend.kxxo.ru:4001'
                     ],
                     'Access-Control-Allow-Headers' => ['*'],
                     'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
