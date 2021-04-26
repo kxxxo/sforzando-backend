@@ -1,33 +1,23 @@
 <?php
+
 namespace backend\controllers;
 
+use backend\models\form\ApplicationForm;
+use common\helpers\ModelErrorHelper;
+use common\models\Application;
 use common\models\Competition;
-use common\models\Instance;
 use common\models\Judge;
-use common\models\Language;
-use frontend\models\ResendVerificationEmailForm;
-use frontend\models\VerifyEmailForm;
 use Yii;
-use yii\base\InvalidArgumentException;
-use yii\filters\auth\CompositeAuth;
-use yii\filters\auth\HttpBearerAuth;
-use yii\filters\auth\QueryParamAuth;
-use yii\web\BadRequestHttpException;
+use yii\base\Exception;
 use yii\rest\Controller;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
-use common\models\LoginForm;
-use frontend\models\PasswordResetRequestForm;
-use frontend\models\ResetPasswordForm;
-use frontend\models\SignupForm;
-use frontend\models\ContactForm;
 
 /**
  * Site controller
  */
 class SiteController extends Controller
 {
-    public function init() {
+    public function init()
+    {
         parent::init(); //
         Yii::$app->user->enableSession = false;
         Yii::$app->user->loginUrl = NULL;
@@ -41,34 +31,33 @@ class SiteController extends Controller
     public function behaviors()
     {
         return [
-            'corsFilter'  => [
+            'corsFilter' => [
                 'class' => \yii\filters\Cors::className(),
-                'cors'  => [
+                'cors' => [
                     // restrict access to domains:
-                    'Origin'      => ['http://localhost:3000'],
+                    'Origin' => ['http://localhost:3000'],
+                    'Access-Control-Allow-Headers' => ['*'],
                     'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
                     'Access-Control-Allow-Credentials' => true,
-                    'Access-Control-Max-Age'           => 3600,                 // Cache (seconds),
+                    'Access-Control-Max-Age' => 3600,                 // Cache (seconds),
                 ],
             ],
         ];
     }
 
 
-
-    public function actionGetCompetitions($page = 1, $count = 3,$result = null)
+    public function actionGetCompetitions($page = 1, $count = 3, $result = null)
     {
         $data = Competition::find()
             ->with(['competitionLanguages'])
-            ->orderBy(['start_date'=>SORT_DESC])
+            ->orderBy(['start_date' => SORT_DESC])
             ->limit($count)
-            ->offset(($page-1)*$count)
-            ;
-        if(!is_null($result)){
+            ->offset(($page - 1) * $count);
+        if (!is_null($result)) {
             $data->andWhere([
                 'AND',
-                ['competition.is_ended'=>$result],
-                ['IS NOT','competition.result_url',null]
+                ['competition.is_ended' => $result],
+                ['IS NOT', 'competition.result_url', null]
             ]);
         }
 
@@ -79,11 +68,54 @@ class SiteController extends Controller
     /**
      * @return array|\yii\db\ActiveRecord[]
      */
-    public function actionGetJudges(){
+    public function actionGetJudges()
+    {
         return Judge::find()
             ->with(['judgeLanguages'])
-            ->orderBy(['id'=>SORT_ASC])
+            ->orderBy(['id' => SORT_ASC])
             ->asArray()
             ->all();
+    }
+
+    public function actionCreateApplication()
+    {
+        $model = new ApplicationForm();
+        if ($model->load(Yii::$app->request->post(), '')) {
+            if ($model->validate()) {
+                $application = new Application([
+                    'competition_id' => $model->competition_id,
+                    'amount_of_participants'=>$model->amountOfPatricipants,
+                    'comment'=>$model->comment,
+                    'concertmaster_fio'=>$model->concertMaester,
+                    'concertmaster_email'=>$model->concertMaesterMail,
+                    'concertmaster_phone'=>$model->concertMaesterPhone,
+                    'city'=>$model->country,
+                    'type_of_performance'=>$model->employment,
+                    'form_of_performance'=>$model->formOfPerfomance,
+                    'full_age'=>$model->fullAge,
+                    'name'=>$model->name,
+                    'school_name'=>$model->nameOfSchool,
+                    'nomination'=>$model->nomination,
+                    'parent_fio'=>$model->parents,
+                    'parent_email'=>$model->parentsMail,
+                    'parent_phone'=>$model->parentsPhone,
+                    'phone'=>$model->phone,
+                    'picked'=>$model->picked,
+                    'teacher_fio'=>$model->teacher,
+                    'teacher_email'=>$model->teacherMail,
+                    'teacher_phone'=>$model->teacherPhone
+                ]);
+                if(!$application->save()){
+                    throw new Exception("Save: ".ModelErrorHelper::getErrorMessage($application->errors));
+                }
+                return [
+                    'status' => 'ok'
+                ];
+            } else {
+                throw new Exception("Validation: ".ModelErrorHelper::getErrorMessage($model->errors));
+            }
+        } else {
+            throw new Exception('Отсутсвуют входящие параметры');
+        }
     }
 }
