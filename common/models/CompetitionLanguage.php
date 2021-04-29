@@ -12,7 +12,7 @@ use Yii;
  * @property int $language_id
  * @property string $title
  * @property string $text
- * @property int $compilation_id
+ * @property int $competition_id
  *
  * @property Competition $competition
  * @property Language $language
@@ -33,7 +33,7 @@ class CompetitionLanguage extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['language_id', 'title', 'text', 'competition_id'], 'required'],
+            [['language_id', 'competition_id'], 'required'],
             [['language_id', 'competition_id'], 'default', 'value' => null],
             [['language_id', 'competition_id'], 'integer'],
             [['title', 'text'], 'string'],

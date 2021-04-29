@@ -33,7 +33,7 @@ class JudgeLanguage extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['language_id', 'judge_id', 'fio', 'description'], 'required'],
+            [['language_id', 'judge_id'], 'required'],
             [['language_id', 'judge_id'], 'default', 'value' => null],
             [['language_id', 'judge_id'], 'integer'],
             [['description'], 'string'],

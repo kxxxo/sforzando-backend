@@ -7,11 +7,19 @@ $params = array_merge(
 );
 
 return [
+    'name' => 'Admin',
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
+        'view' => [
+//            'theme' => [
+//                'pathMap' => [
+//                    '@app/views' => '@vendor/hail812/yii2-adminlte3/src/views'
+//                ],
+//            ],
+        ],
         'request' => [
             'csrfParam' => '_csrf-frontend',
         ],

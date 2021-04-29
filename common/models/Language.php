@@ -18,6 +18,9 @@ use Yii;
  */
 class Language extends \yii\db\ActiveRecord
 {
+    const RUSSIAN = 1;
+    const ENGLISH = 2;
+
     /**
      * {@inheritdoc}
      */
