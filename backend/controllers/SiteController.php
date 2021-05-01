@@ -6,6 +6,8 @@ use backend\models\form\ApplicationForm;
 use common\helpers\ModelErrorHelper;
 use common\models\Application;
 use common\models\Competition;
+use common\models\GalleryFile;
+use common\models\GalleryFolder;
 use common\models\Judge;
 use Yii;
 use yii\base\Exception;
@@ -122,5 +124,31 @@ class SiteController extends Controller
         } else {
             throw new Exception('Отсутсвуют входящие параметры');
         }
+    }
+
+    public function actionGetGallery($path){
+        $folder = GalleryFolder::findOne([
+            'original_path'=>$path
+        ]);
+        if($folder) {
+            return [
+                'info' => [
+                    'id'=>$folder->id,
+                    'name'=>$folder->name,
+                    'path'=>$folder->original_path
+                ],
+                'folders' => GalleryFolder::find()
+                    ->where(['parent_id'=>$folder->id])
+                    ->orderBy(['id'=>SORT_ASC])
+                    ->asArray()
+                    ->all(),
+                'items' => GalleryFile::find()
+                    ->where(['gallery_folder_id'=>$folder->id])
+                    ->orderBy(['id'=>SORT_ASC])
+                    ->asArray()
+                    ->all()
+            ];
+        }
+        return [];
     }
 }

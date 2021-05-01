@@ -21,7 +21,8 @@
         "arhitector/yandex": "dev-master",
         "hail812/yii2-adminlte3": "~1.1",
         "yii2tech/csv-grid": "^1.0",
-        "mihaildev/yii2-ckeditor": "*"
+        "mihaildev/yii2-ckeditor": "*",
+        "yiisoft/yii2-httpclient": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
