@@ -52,35 +52,6 @@ class SiteController extends Controller
         ];
     }
 
-    public function actionGetYandexGeo($part){
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://suggest-maps.yandex.ru/suggest-geo?v=5&search_type=tp&part=".$part."&lang=ru_RU&n=5&origin=jsapi2Geocoder&bbox=-180%2C-90%2C180%2C90",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "GET",
-            CURLOPT_HTTPHEADER => array(
-                "cache-control: no-cache",
-                "postman-token: 89dcd494-0f82-e5cf-c881-71572034a0df"
-            ),
-        ));
-
-        $response = curl_exec($curl);
-        $err = curl_error($curl);
-
-        curl_close($curl);
-
-        if ($err) {
-            echo "cURL Error #:" . $err;
-        } else {
-            echo $response;
-        }
-    }
-
     public function actionGetCompetitions($page = 1, $count = 3, $result = null)
     {
         $data = Competition::find()
