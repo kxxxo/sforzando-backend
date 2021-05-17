@@ -25,9 +25,9 @@ class m210415_103048_compilation_language extends Migration
 
         $this->createTable('language',[
             'id'=>$this->primaryKey(),
-            'name'=>$this->string()->notNull(),
+            'name'=>$this->text()->notNull(),
             'enable'=>$this->boolean()->notNull()->defaultValue(false),
-            'i18_name'=>$this->string()->notNull()
+            'i18_name'=>$this->text()->notNull()
         ]);
 
         $this->batchInsert('language',[
