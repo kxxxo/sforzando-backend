@@ -28,13 +28,16 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
+                'only' => [
+                    'logout',
+//                    'signup'
+                ],
                 'rules' => [
-                    [
-                        'actions' => ['signup'],
-                        'allow' => true,
-                        'roles' => ['?'],
-                    ],
+//                    [
+//                        'actions' => ['signup'],
+//                        'allow' => true,
+//                        'roles' => ['?'],
+//                    ],
                     [
                         'actions' => ['logout'],
                         'allow' => true,
@@ -152,6 +155,7 @@ class SiteController extends Controller
      */
     public function actionSignup()
     {
+        return "OUCH";
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
             Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');

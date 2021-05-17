@@ -9,6 +9,7 @@ use Yii;
 use common\models\Competition;
 use yii\data\ActiveDataProvider;
 use yii\db\Exception;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -28,6 +29,15 @@ class CompetitionController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
                 ],
             ],
         ];
