@@ -21,6 +21,8 @@ class SeedController extends Controller
     public function actionIndex()
     {
         $this->actionSeedNominations();
+        $this->actionSeedPerformanceTypes();
+        $this->actionSeedAgeGroups();
     }
 
     public function actionSeedNominations()
