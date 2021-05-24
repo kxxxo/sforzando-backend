@@ -102,9 +102,8 @@ class Competition extends \yii\db\ActiveRecord
             $languages = Language::find()->all();
             foreach ($languages as $language) {
                 $model = (new CompetitionLanguage([
-                    'title'=>'',
-                    'text'=>'',
-                    'competition_id'=>$this->id,
+                    'name'=>'',
+                    'nomination_id'=>$this->id,
                     'language_id'=>$language->id
                 ]));
                 if(!$model->save()){

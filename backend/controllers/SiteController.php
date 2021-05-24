@@ -37,12 +37,7 @@ class SiteController extends Controller
                 'class' => \yii\filters\Cors::className(),
                 'cors' => [
                     // restrict access to domains:
-                    'Origin' => [
-                        'http://localhost:3000',
-                        'http://sforzando-frontend.kxxo.ru',
-                        'https://sforzando-frontend.kxxo.ru',
-                        'http://sforzando-frontend.kxxo.ru:4001'
-                    ],
+                    'Origin' => Yii::$app->params['frontendHosts'],
                     'Access-Control-Allow-Headers' => ['*'],
                     'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
                     'Access-Control-Allow-Credentials' => true,
@@ -81,48 +76,6 @@ class SiteController extends Controller
             ->orderBy(['id' => SORT_ASC])
             ->asArray()
             ->all();
-    }
-
-    public function actionCreateApplication()
-    {
-        $model = new ApplicationForm();
-        if ($model->load(Yii::$app->request->post(), '')) {
-            if ($model->validate()) {
-                $application = new Application([
-                    'competition_id' => $model->competition_id,
-                    'amount_of_participants'=>$model->amountOfPatricipants,
-                    'comment'=>$model->comment,
-                    'concertmaster_fio'=>$model->concertMaester,
-                    'concertmaster_email'=>$model->concertMaesterMail,
-                    'concertmaster_phone'=>$model->concertMaesterPhone,
-                    'city'=>$model->country,
-                    'type_of_performance'=>$model->employment,
-                    'form_of_performance'=>$model->formOfPerfomance,
-                    'full_age'=>$model->fullAge,
-                    'name'=>$model->name,
-                    'school_name'=>$model->nameOfSchool,
-                    'nomination'=>$model->nomination,
-                    'parent_fio'=>$model->parents,
-                    'parent_email'=>$model->parentsMail,
-                    'parent_phone'=>$model->parentsPhone,
-                    'phone'=>$model->phone,
-                    'picked'=>$model->picked,
-                    'teacher_fio'=>$model->teacher,
-                    'teacher_email'=>$model->teacherMail,
-                    'teacher_phone'=>$model->teacherPhone
-                ]);
-                if(!$application->save()){
-                    throw new Exception("Save: ".ModelErrorHelper::getErrorMessage($application->errors));
-                }
-                return [
-                    'status' => 'ok'
-                ];
-            } else {
-                throw new Exception("Validation: ".ModelErrorHelper::getErrorMessage($model->errors));
-            }
-        } else {
-            throw new Exception('Отсутсвуют входящие параметры');
-        }
     }
 
     public function actionGetGallery($path){

@@ -17,7 +17,6 @@ use Yii;
  * @property string $city
  * @property string $type_of_performance
  * @property string $form_of_performance
- * @property int $full_age
  * @property string $name
  * @property string $school_name
  * @property string $nomination
@@ -29,6 +28,9 @@ use Yii;
  * @property string|null $teacher_fio
  * @property string $teacher_email
  * @property string $teacher_phone
+ * @property string $requisite;
+ * @property string $contact_mail;
+ * @property string $content_url;
  *
  * @property Competition $competition
  */
@@ -48,11 +50,11 @@ class Application extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['competition_id', 'amount_of_participants', 'city', 'type_of_performance','form_of_performance', 'full_age', 'name', 'school_name', 'nomination', 'teacher_email', 'teacher_phone'], 'required'],
-            [['competition_id', 'amount_of_participants', 'full_age'], 'default', 'value' => null],
-            [['competition_id', 'amount_of_participants', 'full_age'], 'integer'],
-            [['comment', 'name', 'school_name', 'nomination','form_of_performance'], 'string'],
-            [['concertmaster_fio', 'concertmaster_phone', 'concertmaster_email', 'city', 'type_of_performance', 'parent_fio', 'parent_email', 'parent_phone', 'phone', 'picked', 'teacher_fio', 'teacher_email', 'teacher_phone'], 'string', 'max' => 255],
+            [['competition_id', 'amount_of_participants', 'city','form_of_performance', 'name', 'school_name', 'nomination', 'teacher_email', 'teacher_phone'], 'required'],
+            [['competition_id', 'amount_of_participants'], 'default', 'value' => null],
+            [['competition_id', 'amount_of_participants','nomination','type_of_performance'], 'integer'],
+            [['comment', 'name', 'school_name','form_of_performance','contact_mail','requisite','content_url'], 'string'],
+            [['concertmaster_fio', 'concertmaster_phone', 'concertmaster_email', 'city', 'parent_fio', 'parent_email', 'parent_phone', 'phone', 'picked', 'teacher_fio', 'teacher_email', 'teacher_phone'], 'string', 'max' => 255],
             [['competition_id'], 'exist', 'skipOnError' => true, 'targetClass' => Competition::className(), 'targetAttribute' => ['competition_id' => 'id']],
         ];
     }
@@ -72,7 +74,6 @@ class Application extends \yii\db\ActiveRecord
             'concertmaster_email' => 'Concertmaster Email',
             'city' => 'City',
             'type_of_performance' => 'Type Of Performance',
-            'full_age' => 'Full Age',
             'name' => 'Name',
             'school_name' => 'School Name',
             'nomination' => 'Nomination',

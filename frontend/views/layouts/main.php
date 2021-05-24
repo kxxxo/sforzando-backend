@@ -40,8 +40,10 @@ AppAsset::register($this);
 //        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
-        $menuItems[] = ['label' => 'Judge', 'url' => ['/judge/index']];
-        $menuItems[] = ['label' => 'Competition', 'url' => ['/competition/index']];
+        $menuItems[] = ['label' => 'Judges', 'url' => ['/judge/index']];
+        $menuItems[] = ['label' => 'Competitions', 'url' => ['/competition/index']];
+        $menuItems[] = ['label' => 'Nominations', 'url' => ['/nomination/index']];
+        $menuItems[] = ['label' => 'Age group', 'url' => ['/age-group/index']];
 
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
