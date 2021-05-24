@@ -10,7 +10,6 @@ use yii\db\Exception;
  * This is the model class for table "performance_type".
  *
  * @property int $id
- * @property string|null $name
  *
  * @property CompetitionPerformanceTypes[] $competitionPerformanceTypes
  * @property PerformanceTypeLanguage[] $performanceTypeLanguages
@@ -33,7 +32,6 @@ class PerformanceType extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'string', 'max' => 255],
         ];
     }
 
@@ -44,7 +42,6 @@ class PerformanceType extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
         ];
     }
 
