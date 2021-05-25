@@ -19,12 +19,24 @@ use yii\web\UploadedFile;
  * @property string $img_url
  * @property bool $is_ended
  * @property string $result_url
+ * @property string $contact_mail
+ * @property string $end_date
+ * @property string $rules_file_url
  *
  * @property CompetitionLanguage[] $competitionLanguages
  */
 class Competition extends \yii\db\ActiveRecord
 {
 
+
+    public $nominations; // для выбора справочника
+    public $age_groups; // для выбора справочника
+    public $performance_types; // для выбора справочника
+
+
+    /** @var $default_text string */
+    /** @var $default_title string */
+    public $default_title, $default_text;
     /**
      * @var UploadedFile
      */
@@ -34,6 +46,11 @@ class Competition extends \yii\db\ActiveRecord
      * @var UploadedFile
      */
     public $resultFile;
+
+    /**
+     * @var UploadedFile
+     */
+    public $rulesFile;
 
     /**
      * {@inheritdoc}
@@ -49,12 +66,21 @@ class Competition extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['create_datetime', 'request_end_datetime', 'start_date'], 'safe'],
-            [['request_end_datetime', 'start_date', 'img_url'], 'required'],
-            [['img_url','result_url'], 'string'],
+            [['create_datetime', 'request_end_datetime', 'start_date', 'end_date','nominations_id','age_groups_id','performance_types_id'], 'safe'],
+            [['request_end_datetime', 'start_date', 'img_url', 'end_date', 'rules_file_url','contact_mail',
+                'nominations','age_groups','performance_types'
+                ], 'required'],
+            [['img_url', 'result_url','default_text','default_title'], 'string'],
             [['is_ended'], 'boolean'],
+            [['contact_mail', 'rules_file_url'], 'string', 'max' => 255],
+            [['imageFile','rulesFile'],'required','when'=>function(){
+                return $this->isNewRecord;
+            },'whenClient' => "function (attribute, value) {
+                return 1 === ".(int)$this->isNewRecord.";
+            }"],
             [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
             [['resultFile'], 'file'],
+            [['rulesFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'pdf, txt, doc, docx']
         ];
     }
 
@@ -66,11 +92,55 @@ class Competition extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'create_datetime' => 'Create Datetime',
-            'request_end_datetime' => 'Дата окончания приема заявок',
-            'start_date' => 'Дата проведения',
+            'request_end_datetime' => 'Request End Datetime',
+            'start_date' => 'Start Date',
             'img_url' => 'Img Url',
             'is_ended' => 'Is Ended',
+            'result_url' => 'Result Url',
+            'contact_mail' => 'Contact Mail',
+            'end_date' => 'End Date',
+            'rules_file_url' => 'Rules File Url',
         ];
+    }
+
+    /**
+     * Gets query for [[Applications]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getApplications()
+    {
+        return $this->hasMany(Application::className(), ['competition_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[CompetitionAgeGroups]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCompetitionAgeGroups()
+    {
+        return $this->hasMany(CompetitionAgeGroups::className(), ['competition_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[CompetitionNominations]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCompetitionNominations()
+    {
+        return $this->hasMany(CompetitionNominations::className(), ['competition_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[CompetitionPerformanceTypes]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCompetitionPerformanceTypes()
+    {
+        return $this->hasMany(CompetitionPerformanceTypes::className(), ['competition_id' => 'id']);
     }
 
     /**
@@ -102,14 +172,45 @@ class Competition extends \yii\db\ActiveRecord
             $languages = Language::find()->all();
             foreach ($languages as $language) {
                 $model = (new CompetitionLanguage([
-                    'name'=>'',
-                    'nomination_id'=>$this->id,
+                    'title' => $this->default_title,
+                    'text' => $this->default_text,
+                    'competition_id'=>$this->id,
                     'language_id'=>$language->id
                 ]));
                 if(!$model->save()){
                     throw new Exception(ModelErrorHelper::getModelErrorMessage($model));
                 }
             }
+        }
+
+        CompetitionNominations::deleteAll([
+            'competition_id'=>$this->id
+        ]);
+        foreach ($this->nominations as $nomination){
+            (new CompetitionNominations([
+                'competition_id'=>$this->id,
+                'nomination_id'=>$nomination
+            ]))->save();
+        }
+
+        CompetitionPerformanceTypes::deleteAll([
+            'competition_id'=>$this->id
+        ]);
+        foreach ($this->performance_types as $performance_type){
+            (new CompetitionPerformanceTypes([
+                'competition_id'=>$this->id,
+                'performance_type_id'=>$performance_type
+            ]))->save();
+        }
+
+        CompetitionAgeGroups::deleteAll([
+            'competition_id'=>$this->id
+        ]);
+        foreach ($this->age_groups as $age_group){
+            (new CompetitionAgeGroups([
+                'competition_id'=>$this->id,
+                'age_group_id'=>$age_group
+            ]))->save();
         }
 
         parent::afterSave($insert, $changedAttributes); // TODO: Change the autogenerated stub

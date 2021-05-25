@@ -44,11 +44,22 @@ $this->params['breadcrumbs'][] = $this->title;
             'is_ended:boolean',
             [
                 'attribute'=>'result_url',
-                'value'=>
-                    Yii::$app->params['backendUrl'].$model->result_url
-                ,
+                'value'=> function($model){
+                    if($model->result_url) {
+                        return Yii::$app->params['backendUrl'] . $model->result_url;
+                    }
+                },
                 'format' => 'url',
             ],
+            [
+                'attribute'=>'rules_file_url',
+                'value'=> function($model){
+                    if($model->rules_file_url) {
+                        return Yii::$app->params['backendUrl'] . $model->rules_file_url;
+                    }
+                },
+                'format' => 'url',
+            ]
         ],
     ]) ?>
 

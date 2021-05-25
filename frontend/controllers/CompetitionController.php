@@ -93,6 +93,14 @@ class CompetitionController extends Controller
                 $model->result_url = '/storage/results/' . $model->resultFile->baseName . '_' . date('U') . '.' . $model->resultFile->extension;
             }
 
+            $model->rulesFile = UploadedFile::getInstance($model, 'rulesFile');
+            if($model->rulesFile) {
+                $model->rulesFile->saveAs('@backend/web/storage/rules/' . $model->rulesFile->baseName . '_' . date('U') . '.' . $model->rulesFile->extension, false);
+                $model->rules_file_url = '/storage/rules/' . $model->rulesFile->baseName . '_' . date('U') . '.' . $model->rulesFile->extension;
+            }
+
+
+
             if(!$model->save()){
                 throw new Exception(ModelErrorHelper::getModelErrorMessage($model));
             }
@@ -126,6 +134,12 @@ class CompetitionController extends Controller
             if($model->resultFile) {
                 $model->resultFile->saveAs('@backend/web/storage/results/' . $model->resultFile->baseName . '_' . date('U') . '.' . $model->resultFile->extension, false);
                 $model->result_url = '/storage/results/' . $model->resultFile->baseName . '_' . date('U') . '.' . $model->resultFile->extension;
+            }
+
+            $model->rulesFile = UploadedFile::getInstance($model, 'rulesFile');
+            if($model->rulesFile) {
+                $model->rulesFile->saveAs('@backend/web/storage/rules/' . $model->rulesFile->baseName . '_' . date('U') . '.' . $model->rulesFile->extension, false);
+                $model->rules_file_url = '/storage/rules/' . $model->rulesFile->baseName . '_' . date('U') . '.' . $model->rulesFile->extension;
             }
 
             $model->save();

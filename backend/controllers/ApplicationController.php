@@ -7,6 +7,9 @@ use common\helpers\ModelErrorHelper;
 use common\models\AgeGroup;
 use common\models\Application;
 use common\models\Competition;
+use common\models\CompetitionAgeGroups;
+use common\models\CompetitionNominations;
+use common\models\CompetitionPerformanceTypes;
 use common\models\GalleryFile;
 use common\models\GalleryFolder;
 use common\models\Judge;
@@ -84,6 +87,7 @@ class ApplicationController extends Controller
                 if(!$application->save()){
                     throw new Exception("Save: ".ModelErrorHelper::getErrorMessage($application->errors));
                 }
+                $application->sendToMail();
                 return [
                     'status' => 'ok'
                 ];
@@ -107,29 +111,33 @@ class ApplicationController extends Controller
         }
 
         return [
-            'nominations'=>Nomination::find()
+            'nominations'=>CompetitionNominations::find()
+                ->joinWith('nomination')
+                ->joinWith('nomination.nominationLanguages')
                 ->select([
                     'nomination.id',
                     'nomination_language.name'
                 ])
-                ->leftJoin('nomination_language','nomination_language.nomination_id = nomination.id')
                 ->where([
-                    'language_id'=>$language->id
+                    'language_id'=>$language->id,
+                    'competition_id'=>$competition->id
                 ])
                 ->orderBy([
                     'nomination_language.name'=>SORT_ASC
                 ])
                 ->asArray()
                 ->all(),
-            'age_groups'=>AgeGroup::find()
+            'age_groups'=>CompetitionAgeGroups::find()
+                ->joinWith('ageGroup')
+                ->joinWith('ageGroup.ageGroupLanguages')
                 ->select([
                     'age_group.id',
                     'age_group.full_years',
                     'age_group_language.name'
                 ])
-                ->leftJoin('age_group_language','age_group_language.age_group_id = age_group.id')
                 ->where([
-                    'language_id'=>$language->id
+                    'language_id'=>$language->id,
+                    'competition_id'=>$competition->id
                 ])
                 ->orderBy([
                     'age_group.full_years'=>SORT_ASC,
@@ -137,14 +145,15 @@ class ApplicationController extends Controller
                 ])
                 ->asArray()
                 ->all(),
-            'performance_types'=>PerformanceType::find()
+            'performance_types'=>CompetitionPerformanceTypes::find()
+                ->joinWith('performanceType.performanceTypeLanguages')
                 ->select([
                     'performance_type.id',
                     'performance_type_language.name'
                 ])
-                ->leftJoin('performance_type_language','performance_type_language.performance_type_id = performance_type.id')
                 ->where([
-                    'language_id'=>$language->id
+                    'language_id'=>$language->id,
+                    'competition_id'=>$competition->id
                 ])
                 ->orderBy([
                     'performance_type_language.name'=>SORT_ASC

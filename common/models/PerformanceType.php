@@ -13,6 +13,7 @@ use yii\db\Exception;
  *
  * @property CompetitionPerformanceTypes[] $competitionPerformanceTypes
  * @property PerformanceTypeLanguage[] $performanceTypeLanguages
+ * @property PerformanceTypeLanguage $performanceTypeLanguage
  */
 class PerformanceType extends \yii\db\ActiveRecord
 {

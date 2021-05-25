@@ -97,4 +97,14 @@ class Application extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Competition::className(), ['id' => 'competition_id']);
     }
+
+    public function sendToMail(){
+        Yii::info("Sending email successfull: ". Yii::$app->mailer->compose()
+            ->setFrom(Yii::$app->params['senderEmail'])
+            ->setTo($this->competition->contact_mail)
+            ->setSubject('New application!!!')
+//            ->setTextBody('Plain text content')
+            ->setHtmlBody(print_r($this->attributes(),1))
+            ->send());
+    }
 }
