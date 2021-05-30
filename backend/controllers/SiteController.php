@@ -47,13 +47,32 @@ class SiteController extends Controller
         ];
     }
 
-    public function actionGetCompetitions($page = 1, $count = 3, $result = null)
+    public function actionGetCompetitions($page = 1, $count = 3, $result = null, $lang = 'ru')
     {
         $data = Competition::find()
-            ->with(['competitionLanguages'])
+            ->select([
+                'id'=>'competition.id',
+                'contact_mail',
+                'create_datetime',
+                'start_date',
+                'end_date',
+                'img_url',
+                'is_ended',
+                'request_end_datetime',
+                'result_url',
+                'rules_file_url',
+                'title'=>'competition_language.title',
+                'text'=>'competition_language.text'
+            ])
+            ->leftJoin('competition_language','competition_language.competition_id = competition.id')
+            ->leftJoin('language','language.id = competition_language.language_id')
             ->orderBy(['start_date' => SORT_DESC])
             ->limit($count)
-            ->offset(($page - 1) * $count);
+            ->offset(($page - 1) * $count)
+            ->where([
+                'language.i18_name'=>$lang
+            ])
+        ;
         if (!is_null($result)) {
             $data->andWhere([
                 'AND',
@@ -69,10 +88,20 @@ class SiteController extends Controller
     /**
      * @return array|\yii\db\ActiveRecord[]
      */
-    public function actionGetJudges()
+    public function actionGetJudges($lang = 'ru')
     {
         return Judge::find()
-            ->with(['judgeLanguages'])
+            ->select([
+                'id'=>'judge.id',
+                'img_url',
+                'fio'=>'judge_language.fio',
+                'description'=>'judge_language.description',
+            ])
+            ->leftJoin('judge_language','judge_language.judge_id = judge.id')
+            ->leftJoin('language','language.id = judge_language.language_id')
+            ->where([
+                'language.i18_name'=>$lang
+            ])
             ->orderBy(['id' => SORT_ASC])
             ->asArray()
             ->all();
