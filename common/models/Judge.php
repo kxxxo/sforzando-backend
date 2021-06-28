@@ -24,6 +24,10 @@ class Judge extends \yii\db\ActiveRecord
      */
     public $imageFile;
 
+    /** @var $default_fio string */
+    /** @var $default_description string */
+    public $default_fio, $default_description;
+
     /**
      * {@inheritdoc}
      */
@@ -39,7 +43,7 @@ class Judge extends \yii\db\ActiveRecord
     {
         return [
             [['img_url'], 'required'],
-            [['img_url'], 'string', 'max' => 255],
+            [['img_url','default_fio','default_description'], 'string', 'max' => 255],
             [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
 
         ];
@@ -76,8 +80,8 @@ class Judge extends \yii\db\ActiveRecord
             $languages = Language::find()->all();
             foreach ($languages as $language) {
                 $model = (new JudgeLanguage([
-                    'fio'=>'',
-                    'description'=>'',
+                    'fio'=>$this->default_fio,
+                    'description'=>$this->default_description,
                     'judge_id'=>$this->id,
                     'language_id'=>$language->id
                 ]));

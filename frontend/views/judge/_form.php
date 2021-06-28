@@ -11,13 +11,24 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <?
+    if($model->isNewRecord) {
+        echo $form->field($model, 'default_fio')->textInput();
+        echo $form->field($model, 'default_description')->widget(\mihaildev\ckeditor\CKEditor::className(), [
+            'editorOptions' => [
+                'preset' => 'standard', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
+                'inline' => false, //по умолчанию false
+            ],
+        ]);
+    }
+    ?>
+
     <?if($model->img_url){
             echo Html::img(Yii::$app->params['backendUrl'].$model->img_url,[
                 'width'=>250,
                 'height'=>250
             ]);
         }
-
     ?>
     <?= $form->field($model, 'imageFile')->fileInput() ?>
 
