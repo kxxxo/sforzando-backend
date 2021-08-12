@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\helpers\ModelErrorHelper;
 use common\models\JudgeLanguage;
 use Yii;
 use common\models\Judge;
@@ -83,7 +84,9 @@ class JudgeController extends Controller
                 $model->imageFile->saveAs('@backend/web/images/judges/' . $model->imageFile->baseName . '_' . date('U') . '.' . $model->imageFile->extension, false);
                 $model->img_url = '/images/judges/' . $model->imageFile->baseName . '_' . date('U') . '.' . $model->imageFile->extension;
             }
-            $model->save();
+            if(!$model->save()){
+                Yii::info(ModelErrorHelper::getModelErrorMessage($model));
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
