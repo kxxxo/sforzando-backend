@@ -16,7 +16,7 @@ return [
                 'class' => 'Swift_SmtpTransport',
                 'encryption' => 'tls',
                 'host' => 'smtp.yandex.ru',
-                'port' => '465',
+                'port' => '587',
                 'username' => 'info@sforzando-fund.com',
                 'password' => 'password4s4zando',
             ],
