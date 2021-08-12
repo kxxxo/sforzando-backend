@@ -175,4 +175,9 @@ class ApplicationController extends Controller
                 ->one()
         ];
     }
+
+    public function actionQ(){
+        $application = Application::findOne(3);
+        $application->sendToMail();
+    }
 }
