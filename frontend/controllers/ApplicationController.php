@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\Competition;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Yii;
@@ -76,6 +77,7 @@ class ApplicationController extends Controller
     }
 
     public function actionDownload($competition_id){
+        $competition = Competition::findOne($competition_id);
         $applications = Application::find()
             ->where(['competition_id'=>$competition_id])
             ->all();
@@ -122,7 +124,7 @@ class ApplicationController extends Controller
         $writer = new Xlsx($spreadsheet);
         ob_end_clean();
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="file.xlsx"');
+        header('Content-Disposition: attachment; filename="'.$competition->competitionLanguage->title.'.xlsx"');
         $writer->save('php://output');
         die();
     }

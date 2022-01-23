@@ -24,6 +24,7 @@ use yii\web\UploadedFile;
  * @property string $rules_file_url
  *
  * @property CompetitionLanguage[] $competitionLanguages
+ * @property CompetitionLanguage $competitionLanguage
  */
 class Competition extends \yii\db\ActiveRecord
 {
