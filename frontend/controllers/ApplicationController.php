@@ -2,6 +2,8 @@
 
 namespace frontend\controllers;
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Yii;
 use common\models\Application;
 use yii\data\ActiveDataProvider;
@@ -74,16 +76,42 @@ class ApplicationController extends Controller
     }
 
     public function actionDownload($competition_id){
-        $exporter = new CsvGrid([
-            'csvFileConfig' => [
-                'cellDelimiter' => ";",
-            ],
-            'dataProvider' => new ActiveDataProvider([
-                'query' => Application::find()
-                    ->where(['competition_id'=>$competition_id]),
-            ]),
-        ]);
-        return $exporter->export()->send('items.csv');
+        $applications = Application::find()
+            ->where(['competition_id'=>$competition_id])
+            ->all();
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $columns = [
+            'amount_of_participants' => 'Кол-во участников',
+            'comment' => 'Комментарий',
+            'concertmaster_fio' => 'Concertmaster Fio',
+            'concertmaster_phone' => 'Concertmaster Phone',
+            'concertmaster_email' => 'Concertmaster Email',
+            'city' => 'Город',
+//            'type_of_performance' => 'Тип представления',
+            'name' => 'Имя',
+            'school_name' => 'Школа',
+//            'nomination' => 'Номинация',
+            'parent_fio' => 'ФИО родителей',
+            'parent_email' => 'Родительский Email',
+            'parent_phone' => 'Родительский телефон',
+            'phone' => 'Телефон',
+            'teacher_fio' => 'Teacher Fio',
+            'teacher_email' => 'Teacher Mail',
+            'teacher_phone' => 'Teacher Phone',
+        ];
+
+
+        foreach ($applications as $i => $application){
+            foreach ($columns as $j=>$column) {
+                $sheet->setCellValue(chr(65+(int)$j).$i, $application->{$column});
+            }
+        }
+
+        $writer = new Xlsx($spreadsheet);
+        $writer->save('php://output');
     }
 
     /**
