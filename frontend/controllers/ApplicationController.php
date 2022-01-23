@@ -106,7 +106,6 @@ class ApplicationController extends Controller
         $col = 65;
         $z = 0;
         foreach ($columns as $column){
-            $sheet->getColumnDimensionByColumn(chr($col+$z))->setAutoSize(true);
             $sheet->setCellValue(chr($col+$z).'1', $column);
             $z++;
         }
