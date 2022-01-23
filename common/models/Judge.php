@@ -43,7 +43,8 @@ class Judge extends \yii\db\ActiveRecord
     {
         return [
             [['img_url'], 'required'],
-            [['img_url','default_fio','default_description'], 'string', 'max' => 255],
+            [['img_url','default_fio'], 'string', 'max' => 255],
+            [['default_description'],'string'],
             [['imageFile'],
                 'file',
                 'skipOnEmpty' => true,
