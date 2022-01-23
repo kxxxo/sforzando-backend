@@ -104,9 +104,13 @@ class ApplicationController extends Controller
         ];
 
 
+
         foreach ($applications as $i => $application){
+            $col = 65;
+            $z = 0;
             foreach ($columns as $j=>$column) {
-                $sheet->setCellValue(chr(65+(int)$j).$i, $application->{$column});
+                $sheet->setCellValue(chr($col+$z).$i, $application->{$j});
+                $z++;
             }
         }
 
