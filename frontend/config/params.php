@@ -2,5 +2,5 @@
 return [
 
     'adminEmail' => 'admin@example.com',
-    'backendUrl' => 'http://sforzando-backend.kxxo.ru'
+    'backendUrl' => 'https://api.sforzando-fund.com'
 ];
