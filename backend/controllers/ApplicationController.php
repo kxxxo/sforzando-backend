@@ -116,7 +116,8 @@ class ApplicationController extends Controller
                 ->joinWith('nomination.nominationLanguages')
                 ->select([
                     'nomination.id',
-                    'nomination_language.name'
+                    'nomination_language.name',
+                    'competition_nominations.nomination_id'
                 ])
                 ->where([
                     'language_id'=>$language->id,
