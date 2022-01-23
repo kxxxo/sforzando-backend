@@ -109,6 +109,12 @@ foreach ($callbacks as $callback) {
     }
 }
 
+createSymlink($root,["frontend/web/images" => "backend/web/images"]);
+createSymlink($root,["frontend/web/storage" => "backend/web/storage"]);
+shell_exec('chown -R www-data backend/web/images');
+shell_exec('chown -R www-data backend/web/storage');
+
+
 echo "\n  ... initialization completed.\n\n";
 
 function getFileList($root, $basePath = '')
