@@ -103,13 +103,19 @@ class ApplicationController extends Controller
             'teacher_phone' => 'Teacher Phone',
         ];
 
+        $col = 65;
+        $z = 0;
+        foreach ($columns as $column){
+            $sheet->setCellValue(chr($col+$z).'1', $column);
+            $z++;
+
+        }
 
 
         foreach ($applications as $i => $application){
-            $col = 65;
             $z = 0;
             foreach ($columns as $j=>$column) {
-                $sheet->setCellValue(chr($col+$z).$i, $application->{$j});
+                $sheet->setCellValue(chr($col+$z).($i+1), $application->{$j});
                 $z++;
             }
         }
