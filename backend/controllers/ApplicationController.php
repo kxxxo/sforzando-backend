@@ -134,7 +134,8 @@ class ApplicationController extends Controller
                 ->select([
                     'age_group.id',
                     'age_group.full_years',
-                    'age_group_language.name'
+                    'age_group_language.name',
+                    'competition_age_groups.age_group_id'
                 ])
                 ->where([
                     'language_id'=>$language->id,
@@ -150,7 +151,8 @@ class ApplicationController extends Controller
                 ->joinWith('performanceType.performanceTypeLanguages')
                 ->select([
                     'performance_type.id',
-                    'performance_type_language.name'
+                    'performance_type_language.name',
+                    'competition_performance_types.performance_type_id'
                 ])
                 ->where([
                     'language_id'=>$language->id,
