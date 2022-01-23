@@ -115,7 +115,17 @@ class ApplicationController extends Controller
         }
 
         $writer = new Xlsx($spreadsheet);
-        $writer->save('php://output');
+
+
+        $response = Yii::$app->getResponse();
+        $headers = $response->getHeaders();
+        $headers->set('Content-Type', 'application/vnd.ms-excel');
+        $headers->set('Content-Disposition', 'attachment;filename="'.date('U').'.xlsx'.'"');
+        $headers->set('Cache-Control: max-age=0');
+        ob_start();
+        $writer->save("php://output");
+        $content = ob_get_contents();
+        ob_clean();
     }
 
     /**
