@@ -114,7 +114,10 @@ class ApplicationController extends Controller
             }
         }
 
+
         $writer = new Xlsx($spreadsheet);
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="file.xlsx"');
         $writer->save('php://output');
     }
 
