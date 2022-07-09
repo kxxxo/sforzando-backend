@@ -101,7 +101,11 @@ class Application extends \yii\db\ActiveRecord
     public function sendToMail(){
         Yii::info("Sending email successfull: ". Yii::$app->mailer->compose()
             ->setFrom(Yii::$app->params['senderEmail'])
-            ->setTo(trim($this->competition->contact_mail))
+            ->setTo(
+                array_map(function($item) {
+                    return trim($item);
+                },explode(',',$this->competition->contact_mail))
+            )
             ->setSubject('New application!!!')
 //            ->setTextBody('Plain text content')
             ->setHtmlBody(print_r($this->attributes(),1))

@@ -13,7 +13,7 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
 
-    <? if($model->isNewRecord) {
+    <?php if($model->isNewRecord) {
         echo $form->field($model, 'default_name')->textInput();
     } ?>
 

@@ -7,6 +7,7 @@ use common\models\JudgeLanguage;
 use Yii;
 use common\models\Judge;
 use yii\data\ActiveDataProvider;
+use yii\db\Exception;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;

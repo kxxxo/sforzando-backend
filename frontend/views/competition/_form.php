@@ -20,7 +20,7 @@ use common\models\AgeGroup;
 <div class="competition-form">
     <?php $form = ActiveForm::begin(); ?>
 
-    <?
+    <?php
      if($model->isNewRecord) {
          echo $form->field($model, 'default_title')->textInput();
          echo $form->field($model, 'default_text')->widget(\mihaildev\ckeditor\CKEditor::className(), [
@@ -32,7 +32,7 @@ use common\models\AgeGroup;
      }
     ?>
 
-    <? $model->performance_types = CompetitionPerformanceTypes::find()->select('performance_type_id')
+    <?php $model->performance_types = CompetitionPerformanceTypes::find()->select('performance_type_id')
         ->where(['competition_id'=>$model->id])->column() ?>
     <?= $form->field($model, 'performance_types')->widget(Select2::classname(), [
         'options' => [ 'multiple' => true],
@@ -47,7 +47,7 @@ use common\models\AgeGroup;
             'allowClear' => false,
         ]
     ]); ?>
-    <? $model->age_groups = CompetitionAgeGroups::find()->select('age_group_id')
+    <?php $model->age_groups = CompetitionAgeGroups::find()->select('age_group_id')
         ->where(['competition_id'=>$model->id])->column() ?>
     <?= $form->field($model, 'age_groups')->widget(Select2::class, [
         'options' => [ 'multiple' => true],
@@ -62,7 +62,7 @@ use common\models\AgeGroup;
             'allowClear' => false,
         ]
     ]); ?>
-    <? $model->nominations = CompetitionNominations::find()->select('nomination_id')
+    <?php $model->nominations = CompetitionNominations::find()->select('nomination_id')
         ->where(['competition_id'=>$model->id])->column() ?>
     <?= $form->field($model, 'nominations')->widget(Select2::class, [
         'data'=>ArrayHelper::map(Nomination::find()
@@ -78,7 +78,7 @@ use common\models\AgeGroup;
         ]
     ]) ?>
 
-    <?
+    <?php
         if(!$model->isNewRecord) {
             $model->request_end_datetime = \Yii::$app->getFormatter()->asDate($model->request_end_datetime, DateHelper::DAY_FORMAT);
         }
@@ -92,7 +92,7 @@ use common\models\AgeGroup;
 
     <div class="row">
         <div class="col-md-6">
-            <?
+            <?php
             if(!$model->isNewRecord) {
                 $model->start_date = \Yii::$app->getFormatter()->asDate($model->start_date, DateHelper::DAY_FORMAT);
             }
@@ -105,7 +105,7 @@ use common\models\AgeGroup;
             ?>
         </div>
         <div class="col-md-6">
-            <?
+            <?php
             if(!$model->isNewRecord) {
                 $model->end_date = \Yii::$app->getFormatter()->asDate($model->end_date, DateHelper::DAY_FORMAT);
             }
@@ -119,9 +119,10 @@ use common\models\AgeGroup;
         </div>
     </div>
 
-    <?= $form->field($model, 'contact_mail')->textInput() ?>
+    <?= $form->field($model, 'contact_mail')->textInput()->label('Contact Mail (Если несколько - через запятую)') ?>
+    <?= $form->field($model, 'contact_telephone')->textInput()->label('Contact Telephone (Если несколько - через запятую)') ?>
 
-    <?
+    <?php
         if($model->img_url) {
             echo Html::img(Yii::$app->params['backendUrl'] . $model->img_url, [
                 'width' => 250,
@@ -133,14 +134,14 @@ use common\models\AgeGroup;
 
     <?= $form->field($model, 'is_ended')->checkbox() ?>
 
-    <?
+    <?php
         if($model->result_url) {
             echo Html::a(Yii::$app->params['backendUrl'].$model->result_url,Yii::$app->params['backendUrl'].$model->result_url);
         }
     ?>
     <?= $form->field($model, 'resultFile')->fileInput() ?>
 
-    <?
+    <?php
     if($model->rules_file_url) {
         echo Html::a(Yii::$app->params['backendUrl'].$model->rules_file_url,Yii::$app->params['backendUrl'].$model->rules_file_url);
     }

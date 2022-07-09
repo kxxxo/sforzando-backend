@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?
+    <?php
     if($model->isNewRecord) {
         echo $form->field($model, 'default_fio')->textInput();
         echo $form->field($model, 'default_description')->widget(\mihaildev\ckeditor\CKEditor::className(), [
@@ -22,8 +22,8 @@ use yii\widgets\ActiveForm;
         ]);
     }
     ?>
-
-    <?if($model->img_url){
+    <?= $form->field($model, 'pos')->textInput(['type' => 'number']) ?>
+    <?php if($model->img_url){
             echo Html::img(Yii::$app->params['backendUrl'].$model->img_url,[
                 'width'=>250,
                 'height'=>250

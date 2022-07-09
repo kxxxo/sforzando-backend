@@ -23,6 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             'judgeLanguage.fio',
+            'pos',
             [
                 'class' => 'yii\grid\ActionColumn',
             ],

@@ -20,6 +20,7 @@ use yii\web\UploadedFile;
  * @property bool $is_ended
  * @property string $result_url
  * @property string $contact_mail
+ * @property string $contact_telephone
  * @property string $end_date
  * @property string $rules_file_url
  *
@@ -68,7 +69,7 @@ class Competition extends \yii\db\ActiveRecord
     {
         return [
             [['create_datetime', 'request_end_datetime', 'start_date', 'end_date','nominations_id','age_groups_id','performance_types_id'], 'safe'],
-            [['request_end_datetime', 'start_date', 'img_url', 'end_date', 'rules_file_url','contact_mail',
+            [['request_end_datetime', 'start_date', 'img_url', 'end_date', 'rules_file_url','contact_mail','contact_telephone',
                 'nominations','age_groups','performance_types'
                 ], 'required'],
             [['img_url', 'result_url','default_text','default_title'], 'string'],
@@ -79,7 +80,7 @@ class Competition extends \yii\db\ActiveRecord
             },'whenClient' => "function (attribute, value) {
                 return 1 === ".(int)$this->isNewRecord.";
             }"],
-            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
+            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg'],
             [['resultFile'], 'file'],
             [['rulesFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'pdf, txt, doc, docx']
         ];
@@ -99,6 +100,7 @@ class Competition extends \yii\db\ActiveRecord
             'is_ended' => 'Is Ended',
             'result_url' => 'Result Url',
             'contact_mail' => 'Contact Mail',
+            'contact_telephone' => 'Contact Telephone',
             'end_date' => 'End Date',
             'rules_file_url' => 'Rules File Url',
         ];
