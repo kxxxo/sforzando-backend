@@ -78,8 +78,8 @@ class ApplicationController extends Controller
                     'phone'=>$model->phone,
                     'picked'=>$model->picked,
                     'teacher_fio'=>$model->teacher,
-                    'teacher_email'=>$model->teacherMail,
-                    'teacher_phone'=>$model->teacherPhone,
+//                    'teacher_email'=>$model->teacherMail,
+//                    'teacher_phone'=>$model->teacherPhone,
                     'content_url'=>$model->content_url,
                     'requisite'=>$model->requisite,
                     'contact_mail'=>$model->contactMail

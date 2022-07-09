@@ -30,8 +30,8 @@ class ApplicationForm extends Model
     public $phone;
     public $picked;
     public $teacher;
-    public $teacherMail;
-    public $teacherPhone;
+//    public $teacherMail;
+//    public $teacherPhone;
     public $competition_id;
     public $requisite;
     public $contactMail;
@@ -43,12 +43,23 @@ class ApplicationForm extends Model
     public function rules()
     {
         return [
-            [['name', 'nameOfSchool', 'country','teacherPhone','phone','teacher','performance_type','amountOfPatricipants','nomination','ageGroup','formOfPerfomance','teacherMail','competition_id','contactMail'], 'required'],
-            [['name', 'nameOfSchool', 'country','teacherPhone','phone','teacher', 'formOfPerfomance','teacherMail','picked','concertMaester','concertMaesterPhone',
+            [['name', 'nameOfSchool', 'country',
+//                'teacherPhone',
+                'phone','teacher','performance_type','amountOfPatricipants','nomination','ageGroup','formOfPerfomance',
+//                'teacherMail',
+                'competition_id','contactMail'], 'required'],
+            [['name', 'nameOfSchool', 'country',
+//                'teacherPhone',
+
+                'phone','teacher', 'formOfPerfomance',
+//                'teacherMail',
+                'picked','concertMaester','concertMaesterPhone',
                 'concertMaesterMail','parents','parentsPhone','comment','requisite','content_url'
             ], 'string'],
             ['amountOfPatricipants','safe'],
-            [['teacherMail','parentsMail','contactMail'], 'email'],
+            [[
+//                'teacherMail',
+                'parentsMail','contactMail'], 'email'],
             [
                 ['competition_id'],
                 'exist',

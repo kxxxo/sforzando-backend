@@ -101,8 +101,8 @@ class ApplicationController extends Controller
             'parent_phone' => 'Родительский телефон',
             'phone' => 'Телефон',
             'teacher_fio' => 'Teacher Fio',
-            'teacher_email' => 'Teacher Mail',
-            'teacher_phone' => 'Teacher Phone',
+//            'teacher_email' => 'Teacher Mail',
+//            'teacher_phone' => 'Teacher Phone',
         ];
 
         $col = 65;
