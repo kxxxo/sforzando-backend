@@ -10,7 +10,7 @@ class m220627_080058_fixes extends Migration
      */
     public function safeUp()
     {
-        $this->addColumn('competition','contact_telephone',$this->text()->notNull());
+        $this->addColumn('competition','contact_telephone',$this->text()->notNull()->defaultValue(''));
 
     }
 
